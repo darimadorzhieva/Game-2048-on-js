@@ -4,8 +4,8 @@ const ArrowDown = "ArrowDown";
 const ArrowLeft = "ArrowLeft";
 const ArrowRight = "ArrowRight";
 const grid = document.querySelector(".grid");
-const score = document.querySelector(".score");
-const result = document.querySelector(".result");
+const scoreDisplay = document.querySelector(".score");
+const resultDisplay = document.querySelector(".result");
 const colorCell = [
   "#afa192",
   "#eee4da",
@@ -20,7 +20,6 @@ const colorCell = [
   "#beeaa5",
   "#d7d4f0",
 ];
-grid.innerHTML = Array(17).join('<div class="cell"></div>');
 
 function clickControl(event) {
   if (event.key === ArrowLeft) {
@@ -42,6 +41,7 @@ class GameManager {
   }
   init() {
     this.board = new Board();
+    this.board.init();
     document.addEventListener("keyup", clickControl);
   }
   checkIsGameOver() {}
@@ -54,12 +54,12 @@ class Board {
   }
   init() {
     const fragment = document.createDocumentFragment();
-    for (let index = 0; index < this.width; index++) {
+    for (let index = 0; index < this.widthBoard * this.widthBoard; index++) {
       const square = document.createElement("div");
       square.innerHTML = "";
-      square.className = "gred-cell";
+      square.className = "cell";
       fragment.appendChild(square);
-      square.push(square);
+      this.squares.push(square);
     }
     this.wrapper.appendChild(fragment);
   }
@@ -74,8 +74,12 @@ class Cell {
   getValue() {
     return this.value;
   }
-  setValue() {}
-  getNewElement() {}
+  setValue() {
+    console.log("setValue");
+  }
+  getNewElement() {
+    console.log("getNewElement");
+  }
 }
 
 const start = new GameManager();
