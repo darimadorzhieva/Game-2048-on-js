@@ -32,7 +32,6 @@ function clickControl(event) {
     console.log("ArrowDown");
   }
 }
-
 class GameManager {
   constructor() {
     this.isGameOver = false;
@@ -42,6 +41,7 @@ class GameManager {
   init() {
     this.board = new Board();
     this.board.init();
+    this.board.generateNewCell();
     document.addEventListener("keyup", clickControl);
   }
   checkIsGameOver() {}
@@ -55,16 +55,29 @@ class Board {
   init() {
     const fragment = document.createDocumentFragment();
     for (let index = 0; index < this.widthBoard * this.widthBoard; index++) {
-      const square = document.createElement("div");
-      square.innerHTML = "";
-      square.className = "cell";
-      fragment.appendChild(square);
-      this.squares.push(square);
+      const cell = new Cell().getNewElement();
+      fragment.appendChild(cell);
+      this.squares.push(cell);
     }
     this.wrapper.appendChild(fragment);
   }
-  generateNewCell() {}
-  addColours() {}
+  generateNewCell() {
+    const randomNumber = Math.floor(Math.random() * this.squares.length);
+
+    if (this.squares[randomNumber].innerHTML === "") {
+      this.squares[randomNumber].innerHTML = 2;
+      this.addColours();
+      // проверить на GameOver
+    } else {
+      generateNewCell();
+    }
+  }
+  addColours() {
+    for (let i = 0; i < this.squares.length; i++) {
+      this.squares[i].style.backgroundColor =
+        colorCell[Math.trunc(Math.sqrt(this.squares[i].innerHTML))];
+    }
+  }
 }
 class Cell {
   constructor() {
@@ -78,7 +91,10 @@ class Cell {
     console.log("setValue");
   }
   getNewElement() {
-    console.log("getNewElement");
+    const square = document.createElement("div");
+    square.className = "cell";
+    this.dom = square;
+    return square;
   }
 }
 
