@@ -75,13 +75,18 @@ header > div {
   width: 100%;
 }
 .cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
   width: 15vmin;
   height: 15vmin;
   margin: 2vmin 2vmin 0 0;
   background-color: #c5c6be;
   float: left;
 }
-/* add left margin to first childs of rows */
+
 .cell:nth-child(4n + 1) {
   margin-left: 2vmin;
 }
